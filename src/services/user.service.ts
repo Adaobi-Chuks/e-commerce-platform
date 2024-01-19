@@ -14,11 +14,18 @@ export default class UserService implements ServiceInterface<Model> {
 
     async create(data: any): Promise<Model> {
       const user = await this.userModel.create(data);
-      return user;
+      const createdUser = await this.userModel.findOne({
+        where: {},
+        attributes: { exclude: ['password'] },
+      });
+      return createdUser as Model;
     }
 
     async findOne(filter: any): Promise<Model | null> {
-      const user = await this.userModel.findOne({ where: filter });
+      const user = await this.userModel.findOne({
+        where: filter,
+        attributes: { exclude: ['password'] },
+      });
       return user;
     }
 
