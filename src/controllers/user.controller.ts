@@ -11,7 +11,6 @@ const UserService = new Service(UserModel);
 const {
     CREATED,
     DUPLICATE_EMAIL,
-    DUPLICATE_PHONENUMBER,
     DUPLICATE_IMAGE,
     INVALID_USERNAME,
     INVALID_PASSWORD,
