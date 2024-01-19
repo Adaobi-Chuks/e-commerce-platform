@@ -6,51 +6,27 @@ import jwt from "jsonwebtoken";
 import { MAXAGE, SECRET } from '../configs/constants.config';
 
 export default class UserService implements ServiceInterface<Model> {
-    private readonly userModel: typeof User; // add this property
+    private readonly userModel: typeof User;
 
     constructor(userModel: typeof User) {
-      this.userModel = userModel; // assign the parameter to the property
+      this.userModel = userModel;
     }
 
     async create(data: any): Promise<Model> {
       const user = await this.userModel.create(data);
-      return user;
+      const createdUser = await this.userModel.findOne({
+        where: {},
+        attributes: { exclude: ['password'] },
+      });
+      return createdUser as Model;
     }
-  
-    async update(id: string, data: any): Promise<Model | null> {
-      const [numUpdated, updatedUsers] = await this.userModel.update(data, { where: { id }, returning: true });
-      if (numUpdated === 0) {
-        return null;
-      }
-      return updatedUsers[0];
-    }
-  
-    async delete(id: string): Promise<Model | null> {
-      const deletedRows = await this.userModel.destroy({ where: { id } });
-      if (deletedRows === 0) {
-        return null;
-      }
-      return await this.userModel.findByPk(id);
-    }
-  
+
     async findOne(filter: any): Promise<Model | null> {
-      const user = await this.userModel.findOne({ where: filter });
+      const user = await this.userModel.findOne({
+        where: filter,
+        attributes: { exclude: ['password'] },
+      });
       return user;
-    }
-  
-    async findWithSpecificFields(filter: any, fields: any): Promise<Model | null> {
-      const user = await this.userModel.findOne({ where: filter, attributes: fields });
-      return user;
-    }
-  
-    async findAll(filter: any): Promise<Model[]> {
-      const users = await this.userModel.findAll({ where: filter });
-      return users;
-    }
-  
-    async findAllWithSpecificFields(filter: any, fields: any): Promise<Model[]> {
-      const users = await this.userModel.findAll({ where: filter, attributes: fields });
-      return users;
     }
 
     async generateAuthToken (user: IUser) {

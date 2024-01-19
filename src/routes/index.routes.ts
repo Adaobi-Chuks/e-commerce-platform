@@ -1,11 +1,13 @@
 import express from "express";
 const router = express.Router();
-import upload from "../configs/multer.config";
-import UserController from "../controllers/user.controller";
-const {
-    createUser,
-} = new UserController();
+import userRoute from "./user.routes";
+import productRoute from "./product.routes";
+import orderRoute from "./order.routes";
+import docsRoute from "./docs.routes";
 
-router.post("/users", upload.single('imageUrl'), createUser);
+router.use('/users', userRoute);
+router.use('/products', productRoute);
+router.use('/orders', orderRoute);
+router.use('/docs', docsRoute);
 
 export default router;
