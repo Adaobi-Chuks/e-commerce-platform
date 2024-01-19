@@ -3,6 +3,7 @@ import ProductController from '../controllers/product.controllers';
 import validate from "../middlewares/validate.middleware";
 import upload from "../configs/multer.config"; 
 import { createSchema, editSchema } from "../schemas/product.schemas";
+import authenticate from "../middlewares/auth/authentication.middleware";
 const router = Router();
 const {
     createProduct,
@@ -13,7 +14,7 @@ const {
 } = new ProductController();
 
 // Create a product
-router.post("/", upload.single('imageUrl'), validate(createSchema), createProduct);
+router.post("/", authenticate, upload.single('imageUrl'), validate(createSchema), createProduct);
 
 // Get all products
 router.get("/", getAllProducts);
@@ -22,9 +23,9 @@ router.get("/", getAllProducts);
 router.get("/:id", getProductById);
 
 // Update a product by ID
-router.put("/:id", validate(editSchema), updateProduct);
+router.put("/:id", authenticate,  validate(editSchema), updateProduct);
 
 // Delete a product by ID
-router.delete("/:id", deleteProduct);
+router.delete("/:id", authenticate,  deleteProduct);
 
 export default router;

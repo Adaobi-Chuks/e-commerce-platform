@@ -1,7 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.MESSAGES = exports.MAXAGE = exports.SECRET = exports.PORT = void 0;
 const PORT = process.env.PORT || 9871;
-const SECRET = process.env.SECRET!;
+exports.PORT = PORT;
+const SECRET = process.env.SECRET;
+exports.SECRET = SECRET;
 const MAXAGE = 3 * 24 * 60 * 60;
-
+exports.MAXAGE = MAXAGE;
 const MESSAGES = {
     DATABASE: {
         CONNECTED: "MongoDB is connected",
@@ -24,14 +29,4 @@ const MESSAGES = {
         DENIED: 'Access Denied: Unauthorized request'
     }
 };
-
-export {
-    PORT,
-    SECRET,
-    MAXAGE,
-    MESSAGES,
-    // DATABASE_URI,
-    // SALTROUNDS,
-    // ENUM,
-    // DATABASES,
-};
+exports.MESSAGES = MESSAGES;

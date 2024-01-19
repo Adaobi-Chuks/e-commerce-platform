@@ -10,13 +10,3 @@ interface IUser {
 export {
     IUser
 };
-
-// // properties for seller information
-// interface SellerInfo {
-
-// }
-
-// // properties for buyer information
-// interface BuyerInfo {
-
-// }

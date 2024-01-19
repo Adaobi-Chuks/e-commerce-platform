@@ -2,8 +2,11 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import {MESSAGES, SECRET} from "../../configs/constants.config";
 import AuthRequest from "../../interfaces/auth.interface";
-import User from "../../services/user.service";
-const UserService = new User();
+import Service from "../../services/user.service";
+import User from '../../models/user.model';
+const UserModel = User;
+// Create an instance of the UserService class
+const UserService = new Service(UserModel);
 
 // check if json web token exists & is verified
 export default function authenticate(req: Request, res: Response, next: NextFunction){
@@ -23,7 +26,7 @@ export default function authenticate(req: Request, res: Response, next: NextFunc
                     message: MESSAGES.AUTH.INVALIDTOKEN
                 });
         } else {
-            const user = await UserService.findById(decoded.id);
+            const user = await UserService.findOne({id: decoded.id});
             if(!user) {
                 return res.status(401)
                 .send({ 
