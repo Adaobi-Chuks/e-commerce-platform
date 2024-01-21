@@ -1,14 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
-import cors from "cors";
 import sequelize from "./configs/database.config";
 import cookieParser from "cookie-parser";
 import rootRoute from "./routes/index.routes";
 import {PORT} from "./configs/constants.config";
 const app = express();
 
-app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
