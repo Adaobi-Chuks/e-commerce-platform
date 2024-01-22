@@ -13,16 +13,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-    res.locals.path = req.path;
-    next();
-});
-
 app.use((err: any, req: any, res: any, next: any) => {
     console.log(err.stack);
     console.log(err.name);
     console.log(err.code);
-
     res.status(500).send({
         message: "Something went wrong"
     });
